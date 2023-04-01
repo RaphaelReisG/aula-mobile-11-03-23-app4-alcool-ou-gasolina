@@ -1,37 +1,31 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, Button, Image} from 'react-native';
 
 
-class App extends Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      numero1: '',
-      numero2: '',
-      resultado: ''
-    };
-    
-    this.calcular = this.calcular.bind(this);
-  }
+export default function App(){
+
+  const [numero1, setNumero1] = useState('')
+  const [numero2, setNumero2] = useState('')
+  const [resultado, setResultado] = useState('')
 
 
-  calcular(){
-    if ( (this.state.numero1 === '') || (this.state.numero2 === '')){
+  function calcular(){
+    if ( (numero1 === '') || (numero2 === '')){
       alert('É obrigatório digitar os dois preços')
       return;
     }
 
-    res = this.state.numero1 / this.state.numero2
+    res = numero1 / numero2
     if(res < 0.7){
-      this.setState({resultado: 'Alcool é melhor ' + res});
+      setResultado(('Alcool é melhor ' + res))
     }
     else{
-      this.setState({resultado: 'Gasolina é melhor ' + res});
+      setResultado(('Gasolina é melhor ' + res))
     }
   }
 
 
-  render(){
+
     return(
       <View style={styles.area}>
 
@@ -46,22 +40,22 @@ class App extends Component{
       <TextInput
       style={styles.input}
       placeholder="Digite o preço do alcool"
-      onChangeText={ (numero) => this.setState({numero1: numero}) }
+      onChangeText={ (numero) => setNumero1((numero)) }
       />
 
       <TextInput
       style={styles.input}
       placeholder="Digite o preço da gasolina"
-      onChangeText={ (numero) => this.setState({numero2: numero}) }
+      onChangeText={ (numero) => setNumero2((numero)) }
       />
 
-      <Button title="Verificar" onPress={this.calcular} />
+      <Button title="Verificar" onPress={calcular} />
 
 
-      <Text style={styles.texto}> {this.state.resultado} </Text>
+      <Text style={styles.texto}> {resultado} </Text>
       </View>
     );
-  }
+  
 }
 
 
@@ -103,4 +97,3 @@ const styles = StyleSheet.create({
 })
 
 
-export default App;
